@@ -1,0 +1,1 @@
+Week 1 completed... tho rn is around week 3 lmao. sorry for the delay.
