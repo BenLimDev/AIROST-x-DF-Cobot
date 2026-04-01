@@ -46,8 +46,6 @@ Every time you open a new terminal to run this simulation, you must export the r
 
     meshes/: Contains the .STL 3D model files.
 
-    textures/: Contains the visual skins/images for the robot.
-
     launch/: Contains the ROS 2 Python launch files.
 
     config/: Configuration files for the simulation.
