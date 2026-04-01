@@ -1,0 +1,15 @@
+# ROS 2 Build Files
+build/
+install/
+log/
+COLCON_IGNORE
+
+# Python
+__pycache__/
+*.pyc
+
+# VS Code
+.vscode/
+
+# System
+.DS_Store
