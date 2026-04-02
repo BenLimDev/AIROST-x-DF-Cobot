@@ -15,6 +15,15 @@ def generate_launch_description():
     doc = xacro.process_file(urdf_file)
     robot_description = {'robot_description': doc.toxml()}
 
+    # 2. Gazebo Bridge (THIS IS THE CLOCK FIX)
+    # This connects Gazebo's internal clock to ROS 2
+    bridge = Node(
+        package='ros_gz_bridge',
+        executable='parameter_bridge',
+        arguments=['/clock@rosgraph_msgs/msg/Clock[gz.msgs.Clock'],
+        output='screen'
+    )
+    
     # 1. Robot State Publisher
     node_robot_state_publisher = Node(
         package='robot_state_publisher',
@@ -23,13 +32,16 @@ def generate_launch_description():
         parameters=[robot_description, {'use_sim_time': True}]
     )
 
-    # 2. Start Gazebo Harmonic (Empty World)
+
+
+    # 3. Start Gazebo Harmonic (Empty World)
+    # The '-r' flag tells Gazebo to start running immediately
     gazebo = ExecuteProcess(
         cmd=['gz', 'sim', '-r', 'empty.sdf'],
         output='screen'
     )
 
-    # 3. Spawn the Robot in Gazebo
+    # 4. Spawn the Robot in Gazebo
     spawn_entity = Node(
         package='ros_gz_sim',
         executable='create',
@@ -39,25 +51,26 @@ def generate_launch_description():
         output='screen'
     )
 
-    # 4. Load Joint State Broadcaster
+    # 5. Load Joint State Broadcaster
     load_joint_state_broadcaster = Node(
         package='controller_manager',
         executable='spawner',
-        arguments=['joint_state_broadcaster'],
+        arguments=['joint_state_broadcaster', '--param-file', os.path.join(pkg_share, 'config', 'joint_names_tm20.yaml')],
         output='screen',
     )
 
-    # 5. Load the tm20 Trajectory Controller
+    # 6. Load the tm20 Trajectory Controller
     load_tm20_controller = Node(
         package='controller_manager',
         executable='spawner',
-        arguments=['tm20_controller'],
+        arguments=['tm20_controller', '--param-file', os.path.join(pkg_share, 'config', 'joint_names_tm20.yaml')],
         output='screen',
     )
 
-    # Sequence the spawners so they don't crash before the robot exists
+    # Final list of things to launch
     return LaunchDescription([
         node_robot_state_publisher,
+        bridge,  # <--- Added the bridge here!
         gazebo,
         spawn_entity,
         RegisterEventHandler(
