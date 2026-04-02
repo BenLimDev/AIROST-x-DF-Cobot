@@ -9,7 +9,7 @@ from tf2_ros import TransformBroadcaster
 import numpy as np
 
 # The camera frame — confirmed from your topic echo
-CAMERA_FRAME = "tm20/link_6/intel_d435"
+CAMERA_FRAME = "link_6"
 OBJECT_FRAME = "target_object"
 
 
