@@ -218,7 +218,8 @@
 
   <gazebo>
     <plugin name="gz_ros2_control::GazeboSimROS2ControlPlugin" filename="libgz_ros2_control-system.so">
-<parameters>/home/moaz/ros2_ws/AIROST-x-DF-Cobot/install/tm20/share/tm20/config/joint_names_tm20.yaml</parameters>    </plugin>
+      <parameters>$(find tm20)/config/joint_names_tm20.yaml</parameters>
+    </plugin>
 
     <plugin filename="gz-sim-sensors-system" name="gz::sim::systems::Sensors">
       <render_engine>ogre2</render_engine>
