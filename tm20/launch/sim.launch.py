@@ -71,5 +71,16 @@ def generate_launch_description():
                 target_action=load_joint_state_broadcaster,
                 on_exit=[load_tm20_controller],
             )
+        ),
+        Node(
+            package='ros_gz_bridge',
+            executable='parameter_bridge',
+            arguments=[
+                '/camera/depth_image/points@sensor_msgs/msg/PointCloud2@gz.msgs.PointCloudPacked',
+                '/camera/depth_image/camera_info@sensor_msgs/msg/CameraInfo@gz.msgs.CameraInfo',
+                '/camera/depth_image/image@sensor_msgs/msg/Image@gz.msgs.Image',
+            ],
+            parameters=[{'use_sim_time': True}],
+            output='screen'
         )
     ])
