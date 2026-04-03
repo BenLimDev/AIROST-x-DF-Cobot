@@ -250,10 +250,9 @@
     </sensor>
   </gazebo>
 
-  <gazebo>
-    <plugin name="gz_ros2_control::GazeboSimROS2ControlPlugin"
-      filename="libgz_ros2_control-system.so">
-      <parameters>/home/mohamed-alwathiq/colcon_ws/install/tm20/share/tm20/config/joint_names_tm20.yaml</parameters>
+  <gazebo>  
+    <plugin filename="libgz_ros2_control-system.so" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
+      <parameters>CONTROLLER_PARAMS_FILE</parameters>
     </plugin>
 
     <plugin filename="gz-sim-sensors-system" name="gz::sim::systems::Sensors">
@@ -261,4 +260,13 @@
     </plugin>
   </gazebo>
 
+  <gazebo reference="base_link">
+    <visual>
+      <material>
+        <ambient>0.5 0.5 0.5 1</ambient>
+        <diffuse>0.5 0.5 0.5 1</diffuse>
+        <specular>0.1 0.1 0.1 1</specular>
+      </material>
+    </visual>
+  </gazebo>
 </robot>
