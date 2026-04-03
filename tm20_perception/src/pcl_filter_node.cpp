@@ -22,12 +22,14 @@ public:
     this->declare_parameter("input_topic", std::string("/camera/depth_image/points"));
     this->declare_parameter("output_topic", std::string("/filtered_points"));
 
-    std::string input_topic  = this->get_parameter("input_topic").as_string();
+    std::string input_topic = this->get_parameter("input_topic").as_string();
     std::string output_topic = this->get_parameter("output_topic").as_string();
 
+    auto qos = rclcpp::QoS(rclcpp::KeepLast(10))
+                   .reliability(rclcpp::ReliabilityPolicy::BestEffort);
     sub_ = this->create_subscription<sensor_msgs::msg::PointCloud2>(
-      input_topic, 10,
-      std::bind(&PCLFilterNode::cloud_callback, this, std::placeholders::_1));
+        input_topic, qos,
+        std::bind(&PCLFilterNode::cloud_callback, this, std::placeholders::_1));
 
     pub_ = this->create_publisher<sensor_msgs::msg::PointCloud2>(output_topic, 10);
 
@@ -52,7 +54,8 @@ private:
     pcl::PointCloud<pcl::PointXYZ>::Ptr cloud(new pcl::PointCloud<pcl::PointXYZ>);
     pcl::fromROSMsg(*msg, *cloud);
 
-    if (cloud->empty()) {
+    if (cloud->empty())
+    {
       RCLCPP_WARN(this->get_logger(), "Received empty cloud, skipping");
       return;
     }
@@ -96,15 +99,15 @@ private:
     pub_->publish(output_msg);
 
     RCLCPP_DEBUG(this->get_logger(),
-      "Filtered: %zu → %zu points",
-      cloud->size(), cloud_filtered->size());
+                 "Filtered: %zu → %zu points",
+                 cloud->size(), cloud_filtered->size());
   }
 
   rclcpp::Subscription<sensor_msgs::msg::PointCloud2>::SharedPtr sub_;
   rclcpp::Publisher<sensor_msgs::msg::PointCloud2>::SharedPtr pub_;
 };
 
-int main(int argc, char * argv[])
+int main(int argc, char *argv[])
 {
   rclcpp::init(argc, argv);
   rclcpp::spin(std::make_shared<PCLFilterNode>());
