@@ -13,5 +13,7 @@ install(DIRECTORY
   DESTINATION share/${PROJECT_NAME}
 )
 
+install(DIRECTORY worlds DESTINATION share/${PROJECT_NAME})
+
 # 3. Export the package for ROS 2
 ament_package()
