@@ -59,6 +59,30 @@ def generate_launch_description():
         resource_path,
         robot_state_publisher,
         gazebo,
-        spawn_robot,
-        bridge,
+        spawn_entity,
+        RegisterEventHandler(
+            event_handler=OnProcessExit(
+                target_action=spawn_entity,
+                on_exit=[load_joint_state_broadcaster],
+            )
+        ),
+        RegisterEventHandler(
+            event_handler=OnProcessExit(
+                target_action=load_joint_state_broadcaster,
+                on_exit=[load_tm20_controller],
+            )
+        ),
+                Node(
+            package='ros_gz_bridge',
+            executable='parameter_bridge',
+            arguments=[
+                '/clock@rosgraph_msgs/msg/Clock[gz.msgs.Clock',
+                '/tf@tf2_msgs/msg/TFMessage@gz.msgs.Pose_V',
+                '/camera/depth_image/points@sensor_msgs/msg/PointCloud2@gz.msgs.PointCloudPacked',
+                '/camera/depth_image/camera_info@sensor_msgs/msg/CameraInfo@gz.msgs.CameraInfo',
+                '/camera/depth_image/image@sensor_msgs/msg/Image@gz.msgs.Image',
+            ],
+            parameters=[{'use_sim_time': True}],
+            output='screen'
+        )
     ])
