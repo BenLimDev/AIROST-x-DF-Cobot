@@ -1,0 +1,10 @@
+moveit_setup_assistant_config:
+  urdf:
+    package: tm20
+    relative_path: urdf/tm20.urdf
+  srdf:
+    relative_path: config/tm20.srdf
+  package_settings:
+    author_name: BenLimDev
+    author_email: benlimshihern.dev@gmail.com
+    generated_timestamp: 1775167410

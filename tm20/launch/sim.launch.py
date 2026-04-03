@@ -1,63 +1,63 @@
 import os
-from launch import LaunchDescription
-from launch.actions import ExecuteProcess, RegisterEventHandler
-from launch.event_handlers import OnProcessExit
-from launch_ros.actions import Node
 from ament_index_python.packages import get_package_share_directory
-import xacro
+from launch import LaunchDescription
+from launch.actions import SetEnvironmentVariable, IncludeLaunchDescription
+from launch.launch_description_sources import PythonLaunchDescriptionSource
+from launch_ros.actions import Node
 
 def generate_launch_description():
-    package_name = 'tm20'
-    pkg_share = get_package_share_directory(package_name)
-    
-    # Process the URDF file
-    urdf_file = os.path.join(pkg_share, 'urdf', 'tm20.urdf')
-    doc = xacro.process_file(urdf_file)
-    robot_description = {'robot_description': doc.toxml()}
+    pkg_tm20 = get_package_share_directory('tm20')
 
-    # 1. Robot State Publisher
-    node_robot_state_publisher = Node(
+    resource_path = SetEnvironmentVariable(
+        name='GZ_SIM_RESOURCE_PATH',
+        value=[os.path.join(pkg_tm20, '..')]
+    )
+
+    with open(os.path.join(pkg_tm20, 'urdf', 'tm20.urdf'), 'r') as f:
+        robot_desc = f.read()
+
+    robot_state_publisher = Node(
         package='robot_state_publisher',
         executable='robot_state_publisher',
-        output='screen',
-        parameters=[robot_description, {'use_sim_time': True}]
+        output='both',
+        parameters=[{
+            'robot_description': robot_desc,
+            'use_sim_time': True
+        }]
     )
 
-    # 2. Start Gazebo Harmonic (Empty World)
-    gazebo = ExecuteProcess(
-        cmd=['gz', 'sim', '-r', 'empty.sdf'],
-        output='screen'
+    gazebo = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource([os.path.join(
+            get_package_share_directory('ros_gz_sim'),
+            'launch', 'gz_sim.launch.py')]),
+        launch_arguments={'gz_args': '-r empty.sdf'}.items(),
     )
 
-    # 3. Spawn the Robot in Gazebo
-    spawn_entity = Node(
+    spawn_robot = Node(
         package='ros_gz_sim',
         executable='create',
-        arguments=['-string', doc.toxml(),
-                   '-name', 'tm20',
-                   '-allow_renaming', 'true'],
+        arguments=[
+            '-name', 'tm20',
+            '-topic', 'robot_description',
+            '-x', '0', '-y', '0', '-z', '0.1'
+        ],
+        output='screen',
+    )
+
+    bridge = Node(
+        package='ros_gz_bridge',
+        executable='parameter_bridge',
+        arguments=['/clock@rosgraph_msgs/msg/Clock[gz.msgs.Clock'],
+        parameters=[{
+            'qos_overrides./tm20_controller/follow_joint_trajectory.publisher.reliability': 'reliable',
+            'qos_overrides./tm20_controller/follow_joint_trajectory.subscription.reliability': 'reliable',
+        }],
         output='screen'
     )
 
-    # 4. Load Joint State Broadcaster
-    load_joint_state_broadcaster = Node(
-        package='controller_manager',
-        executable='spawner',
-        arguments=['joint_state_broadcaster'],
-        output='screen',
-    )
-
-    # 5. Load the tm20 Trajectory Controller
-    load_tm20_controller = Node(
-        package='controller_manager',
-        executable='spawner',
-        arguments=['tm20_controller'],
-        output='screen',
-    )
-
-    # Sequence the spawners so they don't crash before the robot exists
     return LaunchDescription([
-        node_robot_state_publisher,
+        resource_path,
+        robot_state_publisher,
         gazebo,
         spawn_entity,
         RegisterEventHandler(

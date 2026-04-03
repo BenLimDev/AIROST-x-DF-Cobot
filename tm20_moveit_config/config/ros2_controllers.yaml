@@ -1,13 +1,14 @@
+# This config file is used by ros2_control
 controller_manager:
   ros__parameters:
-    update_rate: 100
-    use_sim_time: true
-
-    joint_state_broadcaster:
-      type: joint_state_broadcaster/JointStateBroadcaster
+    update_rate: 100  # Hz
 
     tm20_controller:
       type: joint_trajectory_controller/JointTrajectoryController
+
+
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
 
 tm20_controller:
   ros__parameters:
@@ -23,3 +24,4 @@ tm20_controller:
     state_interfaces:
       - position
       - velocity
+    allow_nonzero_velocity_at_trajectory_end: true
