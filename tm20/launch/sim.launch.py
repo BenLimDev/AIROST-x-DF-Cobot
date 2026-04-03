@@ -25,7 +25,7 @@ def generate_launch_description():
 
     # 2. Start Gazebo Harmonic (Empty World)
     gazebo = ExecuteProcess(
-        cmd=['gz', 'sim', '-r', 'empty.sdf'],
+        cmd=['gz', 'sim', '-r', os.path.join(pkg_share, 'worlds', 'pick_place.sdf')],
         output='screen'
     )
 
@@ -55,11 +55,24 @@ def generate_launch_description():
         output='screen',
     )
 
+    camera_tf_node = Node(
+        package='tf2_ros',
+        executable='static_transform_publisher',
+        name='camera_link_broadcaster',
+        arguments=[
+            '0', '0', '0',
+            '0', '0', '0',
+            'link_6',
+            'tm20/link_5/intel_d435'
+        ],
+    )
+
     # Sequence the spawners so they don't crash before the robot exists
     return LaunchDescription([
         node_robot_state_publisher,
         gazebo,
         spawn_entity,
+        camera_tf_node,
         RegisterEventHandler(
             event_handler=OnProcessExit(
                 target_action=spawn_entity,
