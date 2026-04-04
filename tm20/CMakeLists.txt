@@ -6,6 +6,7 @@ find_package(ament_cmake REQUIRED)
 
 # 2. Install Directories (This makes them available in the 'install' folder)
 install(DIRECTORY
+  rviz
   config
   launch
   meshes
