@@ -1,229 +1,49 @@
-<?xml version="1.0" encoding="utf-8"?>
-<robot name="tm20">
+controller_manager:
+  ros__parameters:
+    update_rate: 100  # Hz
 
-  <ros2_control name="gz_ros2_control" type="system">
-    <hardware>
-      <plugin>gz_ros2_control/GazeboSimSystem</plugin>
-    </hardware>
-    <joint name="joint_1">
-      <command_interface name="position"/>
-      <state_interface name="position"><param name="initial_value">0.0</param></state_interface>
-      <state_interface name="velocity"/>
-    </joint>
-    <joint name="joint_2">
-      <command_interface name="position"/>
-      <state_interface name="position"><param name="initial_value">0.0</param></state_interface>
-      <state_interface name="velocity"/>
-    </joint>
-    <joint name="joint_3">
-      <command_interface name="position"/>
-      <state_interface name="position"><param name="initial_value">0.0</param></state_interface>
-      <state_interface name="velocity"/>
-    </joint>
-    <joint name="joint_4">
-      <command_interface name="position"/>
-      <state_interface name="position"><param name="initial_value">0.0</param></state_interface>
-      <state_interface name="velocity"/>
-    </joint>
-    <joint name="joint_5">
-      <command_interface name="position"/>
-      <state_interface name="position"><param name="initial_value">0.0</param></state_interface>
-      <state_interface name="velocity"/>
-    </joint>
-    <joint name="joint_6">
-      <command_interface name="position"/>
-      <state_interface name="position"><param name="initial_value">0.0</param></state_interface>
-      <state_interface name="velocity"/>
-    </joint>
-  </ros2_control>
+    # Publishes the current state of all joints to the /joint_states topic
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
 
-  <link name="world"/>
-  <joint name="world_joint" type="fixed">
-    <parent link="world"/>
-    <child link="base_link"/>
-    <origin xyz="0 0 0" rpy="0 0 0"/>
-  </joint>
+    # Controls the main movement of the TM20 Arm
+    tm20_arm_controller:
+      type: joint_trajectory_controller/JointTrajectoryController
 
-  <link name="base_link">
-    <inertial>
-      <origin xyz="-0.04007 -0.03016 0.00037" rpy="0 0 0" />
-      <mass value="1.886" />
-      <inertia ixx="0.005" ixy="0" ixz="0" iyy="0.008" iyz="0" izz="0.005" />
-    </inertial>
-    <visual>
-      <geometry><mesh filename="package://tm20/meshes/base_link.STL" /></geometry>
-    </visual>
-    <collision>
-      <origin xyz="0 0 0.05" rpy="0 0 0"/>
-      <geometry><cylinder radius="0.1" length="0.1"/></geometry>
-    </collision>
-  </link>
+    # Controls the opening/closing of the Gripper
+    tm20_gripper_controller:
+      type: position_controllers/GripperActionController
 
-  <link name="link_1">
-    <inertial>
-      <origin xyz="0.01897 0.09227 0" rpy="0 0 0" />
-      <mass value="4.057" />
-      <inertia ixx="0.016" ixy="0.0005" ixz="0" iyy="0.016" iyz="0" izz="0.020" />
-    </inertial>
-    <visual>
-      <geometry><mesh filename="package://tm20/meshes/link_1.STL" /></geometry>
-    </visual>
-    <collision>
-      <origin xyz="0 0.1 0" rpy="1.5708 0 0"/>
-      <geometry><cylinder radius="0.08" length="0.2"/></geometry>
-    </collision>
-  </link>
+# --- Arm Controller Configuration ---
+tm20_arm_controller:
+  ros__parameters:
+    joints:
+      - joint_1
+      - joint_2
+      - joint_3
+      - joint_4
+      - joint_5
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+      - velocity
+    state_publish_rate: 100.0
+    action_monitor_rate: 20.0
+    allow_partial_joints_goal: false
+    constraints:
+      stopped_velocity_tolerance: 0.01
+      goal_time: 0.0
 
-  <joint name="joint_1" type="revolute">
-    <origin xyz="-0.04007 -0.00037 0.01545" rpy="1.5708 0 0.39147" />
-    <parent link="base_link" />
-    <child link="link_1" />
-    <axis xyz="0 1 0" />
-    <limit lower="-4.71" upper="4.71" effort="100" velocity="10" />
-  </joint>
-
-  <link name="link_2">
-    <inertial>
-      <origin xyz="0 0.2641 -0.0656" rpy="0 0 0" />
-      <mass value="11.25" />
-      <inertia ixx="0.640" ixy="0" ixz="0" iyy="0.031" iyz="0.0001" izz="0.634" />
-    </inertial>
-    <visual>
-      <geometry><mesh filename="package://tm20/meshes/link_2.STL" /></geometry>
-    </visual>
-    <collision>
-      <origin xyz="0 0.26 0" rpy="1.5708 0 0"/>
-      <geometry><cylinder radius="0.08" length="0.55"/></geometry>
-    </collision>
-  </link>
-
-  <joint name="joint_2" type="revolute">
-    <origin xyz="0.14186 0.085 0" rpy="1.5708 -1.4804 -1.5708" />
-    <parent link="link_1" />
-    <child link="link_2" />
-    <axis xyz="0 0 1" />
-    <limit lower="-3.14" upper="3.14" effort="100" velocity="10" />
-  </joint>
-
-  <link name="link_3">
-    <inertial>
-      <origin xyz="-0.06778 0.26348 0" rpy="0 0 0" />
-      <mass value="4.043" />
-      <inertia ixx="0.149" ixy="0.0029" ixz="0" iyy="0.0048" iyz="0" izz="0.150" />
-    </inertial>
-    <visual>
-      <geometry><mesh filename="package://tm20/meshes/link_3.STL" /></geometry>
-    </visual>
-    <collision>
-      <origin xyz="0 0.26 0" rpy="1.5708 0 0"/>
-      <geometry><cylinder radius="0.06" length="0.55"/></geometry>
-    </collision>
-  </link>
-
-  <joint name="joint_3" type="revolute">
-    <origin xyz="0 0.6361 0" rpy="0.079313 1.5708 0" />
-    <parent link="link_2" />
-    <child link="link_3" />
-    <axis xyz="1 0 0" />
-    <limit lower="-2.9" upper="2.9" effort="100" velocity="10" />
-  </joint>
-
-  <link name="link_4">
-    <inertial>
-      <origin xyz="-0.04898 -0.00371 0" rpy="0 0 0" />
-      <mass value="0.84" />
-      <inertia ixx="0.0014" ixy="0" ixz="0" iyy="0.0009" iyz="0" izz="0.0016" />
-    </inertial>
-    <visual>
-      <geometry><mesh filename="package://tm20/meshes/link_4.STL" /></geometry>
-    </visual>
-    <collision>
-      <origin xyz="0 0 0" rpy="1.5708 0 0"/>
-      <geometry><cylinder radius="0.05" length="0.15"/></geometry>
-    </collision>
-  </link>
-
-  <joint name="joint_4" type="revolute">
-    <origin xyz="0 0.5271 0" rpy="3.1396 0 -3.1416" />
-    <parent link="link_3" />
-    <child link="link_4" />
-    <axis xyz="1 0 0" />
-    <limit lower="-3.14" upper="3.14" effort="100" velocity="10" />
-  </joint>
-
-  <link name="link_5">
-    <inertial>
-      <origin xyz="-0.07928 0 0.05484" rpy="0 0 0" />
-      <mass value="1.582" />
-      <inertia ixx="0.0048" ixy="0" ixz="0.0003" iyy="0.0051" iyz="0" izz="0.0016" />
-    </inertial>
-    <visual>
-      <geometry><mesh filename="package://tm20/meshes/link_5.STL" /></geometry>
-    </visual>
-    <collision>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry><cylinder radius="0.05" length="0.15"/></geometry>
-    </collision>
-  </link>
-
-  <joint name="joint_5" type="revolute">
-    <origin xyz="-0.055141 0.060015 0" rpy="1.4876 0 -1.5708" />
-    <parent link="link_4" />
-    <child link="link_5" />
-    <axis xyz="1 0 0" />
-    <limit lower="-3.14" upper="3.14" effort="100" velocity="10" />
-  </joint>
-
-  <link name="link_6">
-    <inertial>
-      <origin xyz="0 0 0.02" rpy="0 0 0" />
-      <mass value="0.2" />
-      <inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.0001" iyz="0" izz="0.0001" />
-    </inertial>
-    <visual>
-      <geometry><mesh filename="package://tm20/meshes/link_6.STL" /></geometry>
-    </visual>
-    <collision>
-      <origin xyz="0 0 0.02" rpy="0 0 0"/>
-      <geometry><box size="0.025 0.09 0.025"/></geometry>
-    </collision>
-  </link>
-
-  <joint name="joint_6" type="revolute">
-    <origin xyz="0 0.05 0" rpy="0 0 0" /> 
-    <parent link="link_5" />
-    <child link="link_6" />
-    <axis xyz="0 0 1" />
-    <limit lower="-6.28" upper="6.28" effort="50" velocity="10" />
-  </joint>
-
-  <gazebo reference="link_6">
-    <sensor type="rgbd_camera" name="intel_d435">
-      <always_on>true</always_on>
-      <update_rate>30.0</update_rate>
-      <topic>camera/depth_image</topic>
-      <camera>
-        <horizontal_fov>1.50098</horizontal_fov>
-        <image>
-          <width>640</width>
-          <height>480</height>
-        </image>
-        <clip>
-          <near>0.1</near>
-          <far>10.0</far>
-        </clip>
-      </camera>
-    </sensor>
-  </gazebo>
-
-  <gazebo>
-    <plugin name="gz_ros2_control::GazeboSimROS2ControlPlugin" filename="libgz_ros2_control-system.so">
-      <parameters>$(find tm20)/config/joint_names_TM20.yaml</parameters>
-    </plugin>
-
-    <plugin filename="gz-sim-sensors-system" name="gz::sim::systems::Sensors">
-      <render_engine>ogre2</render_engine>
-    </plugin>
-  </gazebo>
-
-</robot>
+# --- Gripper Controller Configuration ---
+tm20_gripper_controller:
+  ros__parameters:
+    joint: joint_8
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+      - velocity
+    stall_timeout: 1.0
+    stall_velocity_threshold: 0.001
+    goal_tolerance: 0.01
