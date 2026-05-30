@@ -6,13 +6,15 @@ find_package(ament_cmake REQUIRED)
 
 # 2. Install Directories (This makes them available in the 'install' folder)
 install(DIRECTORY
+  rviz
   config
   launch
   meshes
-  textures
   urdf
   DESTINATION share/${PROJECT_NAME}
 )
+
+install(DIRECTORY worlds DESTINATION share/${PROJECT_NAME})
 
 # 3. Export the package for ROS 2
 ament_package()

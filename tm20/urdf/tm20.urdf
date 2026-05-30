@@ -6,42 +6,47 @@
       <plugin>gz_ros2_control/GazeboSimSystem</plugin>
     </hardware>
     <joint name="joint_1">
-      <command_interface name="position"/>
-      <state_interface name="position"><param name="initial_value">0.0</param></state_interface>
-      <state_interface name="velocity"/>
+      <command_interface name="position" />
+      <state_interface name="position">
+        <param name="initial_value">0.0</param>
+      </state_interface>
+      <state_interface name="velocity" />
     </joint>
     <joint name="joint_2">
-      <command_interface name="position"/>
-      <state_interface name="position"><param name="initial_value">0.0</param></state_interface>
-      <state_interface name="velocity"/>
+      <command_interface name="position" />
+      <state_interface name="position">
+        <param name="initial_value">0.0</param>
+      </state_interface>
+      <state_interface name="velocity" />
     </joint>
     <joint name="joint_3">
-      <command_interface name="position"/>
-      <state_interface name="position"><param name="initial_value">0.0</param></state_interface>
-      <state_interface name="velocity"/>
+      <command_interface name="position" />
+      <state_interface name="position">
+        <param name="initial_value">0.0</param>
+      </state_interface>
+      <state_interface name="velocity" />
     </joint>
     <joint name="joint_4">
-      <command_interface name="position"/>
-      <state_interface name="position"><param name="initial_value">0.0</param></state_interface>
-      <state_interface name="velocity"/>
+      <command_interface name="position" />
+      <state_interface name="position">
+        <param name="initial_value">0.0</param>
+      </state_interface>
+      <state_interface name="velocity" />
     </joint>
     <joint name="joint_5">
-      <command_interface name="position"/>
-      <state_interface name="position"><param name="initial_value">0.0</param></state_interface>
-      <state_interface name="velocity"/>
-    </joint>
-    <joint name="joint_8">
-      <command_interface name="position"/>
-      <state_interface name="position"><param name="initial_value">0.0</param></state_interface>
-      <state_interface name="velocity"/>
+      <command_interface name="position" />
+      <state_interface name="position">
+        <param name="initial_value">0.0</param>
+      </state_interface>
+      <state_interface name="velocity" />
     </joint>
   </ros2_control>
 
-  <link name="world"/>
+  <link name="world" />
   <joint name="world_joint" type="fixed">
-    <parent link="world"/>
-    <child link="base_link"/>
-    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <parent link="world" />
+    <child link="base_link" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
   </joint>
 
   <link name="base_link">
@@ -51,11 +56,15 @@
       <inertia ixx="0.005" ixy="0" ixz="0" iyy="0.008" iyz="0" izz="0.005" />
     </inertial>
     <visual>
-      <geometry><mesh filename="package://tm20/meshes/base_link.STL" /></geometry>
+      <geometry>
+        <mesh filename="package://tm20/meshes/base_link.STL" />
+      </geometry>
     </visual>
     <collision>
-      <origin xyz="0 0 0.05" rpy="0 0 0"/>
-      <geometry><cylinder radius="0.1" length="0.1"/></geometry>
+      <origin xyz="0 0 0.05" rpy="0 0 0" />
+      <geometry>
+        <cylinder radius="0.1" length="0.1" />
+      </geometry>
     </collision>
   </link>
 
@@ -66,11 +75,15 @@
       <inertia ixx="0.016" ixy="0.0005" ixz="0" iyy="0.016" iyz="0" izz="0.020" />
     </inertial>
     <visual>
-      <geometry><mesh filename="package://tm20/meshes/link_1.STL" /></geometry>
+      <geometry>
+        <mesh filename="package://tm20/meshes/link_1.STL" />
+      </geometry>
     </visual>
     <collision>
-      <origin xyz="0 0.1 0" rpy="1.5708 0 0"/>
-      <geometry><cylinder radius="0.08" length="0.2"/></geometry>
+      <origin xyz="0 0.1 0" rpy="1.5708 0 0" />
+      <geometry>
+        <cylinder radius="0.08" length="0.2" />
+      </geometry>
     </collision>
   </link>
 
@@ -79,7 +92,7 @@
     <parent link="base_link" />
     <child link="link_1" />
     <axis xyz="0 1 0" />
-    <limit lower="-4.71" upper="4.71" effort="100" velocity="0.1" />
+    <limit lower="-4.71" upper="4.71" effort="100" velocity="10.0" />
   </joint>
 
   <link name="link_2">
@@ -89,11 +102,15 @@
       <inertia ixx="0.640" ixy="0" ixz="0" iyy="0.031" iyz="0.0001" izz="0.634" />
     </inertial>
     <visual>
-      <geometry><mesh filename="package://tm20/meshes/link_2.STL" /></geometry>
+      <geometry>
+        <mesh filename="package://tm20/meshes/link_2.STL" />
+      </geometry>
     </visual>
     <collision>
-      <origin xyz="0 0.26 0" rpy="1.5708 0 0"/>
-      <geometry><cylinder radius="0.08" length="0.55"/></geometry>
+      <origin xyz="0 0.26 0" rpy="1.5708 0 0" />
+      <geometry>
+        <cylinder radius="0.08" length="0.55" />
+      </geometry>
     </collision>
   </link>
 
@@ -112,11 +129,15 @@
       <inertia ixx="0.221" ixy="0.02" ixz="0" iyy="0.014" iyz="0" izz="0.227" />
     </inertial>
     <visual>
-      <geometry><mesh filename="package://tm20/meshes/link_3.STL" /></geometry>
+      <geometry>
+        <mesh filename="package://tm20/meshes/link_3.STL" />
+      </geometry>
     </visual>
     <collision>
-      <origin xyz="0 0.26 0" rpy="1.5708 0 0"/>
-      <geometry><cylinder radius="0.06" length="0.55"/></geometry>
+      <origin xyz="0 0.26 0" rpy="1.5708 0 0" />
+      <geometry>
+        <cylinder radius="0.06" length="0.55" />
+      </geometry>
     </collision>
   </link>
 
@@ -124,8 +145,8 @@
     <origin xyz="0 0.6361 0" rpy="-1.5708 1.5312 -1.5797" />
     <parent link="link_2" />
     <child link="link_3" />
-    <axis xyz="0.999 0.039 0" />
-    <limit lower="-2.9" upper="2.9" effort="100" velocity="0.1" />
+    <axis xyz="1 0 0" />
+    <limit lower="-2.9" upper="2.9" effort="100" velocity="10.0" />
   </joint>
 
   <link name="link_4">
@@ -135,11 +156,15 @@
       <inertia ixx="0.0014" ixy="0" ixz="0" iyy="0.0009" iyz="0" izz="0.0016" />
     </inertial>
     <visual>
-      <geometry><mesh filename="package://tm20/meshes/link_4.STL" /></geometry>
+      <geometry>
+        <mesh filename="package://tm20/meshes/link_4.STL" />
+      </geometry>
     </visual>
     <collision>
-      <origin xyz="0 0 0" rpy="1.5708 0 0"/>
-      <geometry><cylinder radius="0.05" length="0.15"/></geometry>
+      <origin xyz="0 0 0" rpy="1.5708 0 0" />
+      <geometry>
+        <cylinder radius="0.05" length="0.15" />
+      </geometry>
     </collision>
   </link>
 
@@ -148,7 +173,7 @@
     <parent link="link_3" />
     <child link="link_4" />
     <axis xyz="1 0 0" />
-    <limit lower="-3.14" upper="3.14" effort="100" velocity="0.1" />
+    <limit lower="-3.14" upper="3.14" effort="100" velocity="10.0" />
   </joint>
 
   <link name="link_5">
@@ -158,11 +183,15 @@
       <inertia ixx="0.0048" ixy="0" ixz="0.0003" iyy="0.0051" iyz="0" izz="0.0016" />
     </inertial>
     <visual>
-      <geometry><mesh filename="package://tm20/meshes/link_5.STL" /></geometry>
+      <geometry>
+        <mesh filename="package://tm20/meshes/link_5.STL" />
+      </geometry>
     </visual>
     <collision>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry><cylinder radius="0.05" length="0.15"/></geometry>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <cylinder radius="0.05" length="0.15" />
+      </geometry>
     </collision>
   </link>
 
@@ -171,7 +200,7 @@
     <parent link="link_4" />
     <child link="link_5" />
     <axis xyz="1 0 0" />
-    <limit lower="-3.14" upper="3.14" effort="100" velocity="0.1" />
+    <limit lower="-3.14" upper="3.14" effort="100" velocity="10.0" />
   </joint>
 
   <link name="link_6">
@@ -181,80 +210,29 @@
       <inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.0001" iyz="0" izz="0.0001" />
     </inertial>
     <visual>
-      <geometry><mesh filename="package://tm20/meshes/link_6.STL" /></geometry>
+      <geometry>
+        <mesh filename="package://tm20/meshes/link_6.STL" />
+      </geometry>
     </visual>
     <collision>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry><box size="0.025 0.09 0.025"/></geometry>
+      <origin xyz="0 0 0.02" rpy="0 0 0" />
+      <geometry>
+        <box size="0.025 0.09 0.025" />
+      </geometry>
     </collision>
   </link>
 
   <joint name="joint_6" type="fixed">
-    <origin xyz="-0.01348 -0.0014664 0.10695" rpy="0 -0.031485 -1.5886" />
+    <origin xyz="-0.012154 -0.0020165 0.12472" rpy="-0.0098957 -0.016364 1.5871" />
     <parent link="link_5" />
     <child link="link_6" />
-  </joint>
-
-  <link name="end_effector_based">
-    <inertial>
-      <origin xyz="0 0 0" rpy="0 0 0" />
-      <mass value="0.1" />
-      <inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.0001" iyz="0" izz="0.0001" />
-    </inertial>
-    <visual>
-      <geometry><mesh filename="package://tm20/meshes/end_effector_based.STL" /></geometry>
-    </visual>
-    <collision>
-      <origin xyz="0 0.06 0" rpy="0 0 0"/>
-      <geometry><box size="0.05 0.12 0.05"/></geometry>
-    </collision>
-  </link>
-
-  <joint name="joint_7" type="fixed">
-    <origin xyz="-0.00047 -0.0555 0" rpy="1.5702 -0.03148 -3.1237" />
-    <parent link="link_6" />
-    <child link="end_effector_based" />
-  </joint>
-
-  <link name="gripper_left">
-    <inertial>
-      <origin xyz="0 0 0" rpy="0 0 0" />
-      <mass value="0.05" />
-      <inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.0001" iyz="0" izz="0.0001" />
-    </inertial>
-    <visual><geometry><mesh filename="package://tm20/meshes/gripper_left.STL" /></geometry></visual>
-    <collision><geometry><box size="0.02 0.05 0.02"/></geometry></collision>
-  </link>
-
-  <joint name="joint_8" type="prismatic">
-    <origin xyz="0 0.14178 0.01" rpy="3.1416 0 0" />
-    <parent link="end_effector_based" />
-    <child link="gripper_left" />
-    <axis xyz="1 0 0" />
-    <limit lower="-0.02" upper="0" effort="50" velocity="0.1" />
-  </joint>
-
-  <link name="gripper_right">
-    <inertial>
-      <origin xyz="0 0 0" rpy="0 0 0" />
-      <mass value="0.05" />
-      <inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.0001" iyz="0" izz="0.0001" />
-    </inertial>
-    <visual><geometry><mesh filename="package://tm20/meshes/gripper_right.STL" /></geometry></visual>
-    <collision><geometry><box size="0.02 0.05 0.02"/></geometry></collision>
-  </link>
-
-  <joint name="joint_9" type="prismatic">
-    <origin xyz="0 0.14178 -0.01" rpy="0 0 -3.1416" />
-    <parent link="end_effector_based" />
-    <child link="gripper_right" />
-    <axis xyz="1 0 0" />
-    <limit lower="-0.02" upper="0" effort="50" velocity="0.1" />
-    <mimic joint="joint_8" multiplier="1" offset="0" />
+    <axis xyz="0 0 1" />
+    <limit lower="-6.28" upper="6.28" effort="50" velocity="10.0" />
   </joint>
 
   <gazebo reference="link_6">
     <sensor type="rgbd_camera" name="intel_d435">
+      <pose>0 0 0 -1.5708 0 0</pose>
       <always_on>true</always_on>
       <update_rate>30.0</update_rate>
       <topic>camera/depth_image</topic>
@@ -266,24 +244,22 @@
     </sensor>
   </gazebo>
 
-  <gazebo>
-    <plugin name="gz_ros2_control::GazeboSimROS2ControlPlugin" filename="libgz_ros2_control-system.so">
-      <parameters>$(find tm20)/config/joint_names_TM20.yaml</parameters>
+  <gazebo>  
+    <plugin filename="libgz_ros2_control-system.so" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
+      <parameters>CONTROLLER_PARAMS_FILE</parameters>
     </plugin>
     <plugin filename="gz-sim-sensors-system" name="gz::sim::systems::Sensors">
       <render_engine>ogre2</render_engine>
     </plugin>
   </gazebo>
 
-  <gazebo reference="base_link"><visual><material><ambient>0.5 0.5 0.5 1</ambient><diffuse>0.5 0.5 0.5 1</diffuse></material></visual></gazebo>
-  <gazebo reference="link_1"><visual><material><ambient>0.5 0.5 0.5 1</ambient><diffuse>0.5 0.5 0.5 1</diffuse></material></visual></gazebo>
-  <gazebo reference="link_2"><visual><material><ambient>0.5 0.5 0.5 1</ambient><diffuse>0.5 0.5 0.5 1</diffuse></material></visual></gazebo>
-  <gazebo reference="link_3"><visual><material><ambient>0.5 0.5 0.5 1</ambient><diffuse>0.5 0.5 0.5 1</diffuse></material></visual></gazebo>
-  <gazebo reference="link_4"><visual><material><ambient>0.5 0.5 0.5 1</ambient><diffuse>0.5 0.5 0.5 1</diffuse></material></visual></gazebo>
-  <gazebo reference="link_5"><visual><material><ambient>0.5 0.5 0.5 1</ambient><diffuse>0.5 0.5 0.5 1</diffuse></material></visual></gazebo>
-  <gazebo reference="link_6"><visual><material><ambient>0.5 0.5 0.5 1</ambient><diffuse>0.5 0.5 0.5 1</diffuse></material></visual></gazebo>
-  <gazebo reference="end_effector_based"><visual><material><ambient>0.5 0.5 0.5 1</ambient><diffuse>0.5 0.5 0.5 1</diffuse></material></visual></gazebo>
-  <gazebo reference="gripper_left"><visual><material><ambient>0.5 0.5 0.5 1</ambient><diffuse>0.5 0.5 0.5 1</diffuse></material></visual></gazebo>
-  <gazebo reference="gripper_right"><visual><material><ambient>0.5 0.5 0.5 1</ambient><diffuse>0.5 0.5 0.5 1</diffuse></material></visual></gazebo>
-  
+  <gazebo reference="base_link">
+    <visual>
+      <material>
+        <ambient>0.5 0.5 0.5 1</ambient>
+        <diffuse>0.5 0.5 0.5 1</diffuse>
+        <specular>0.1 0.1 0.1 1</specular>
+      </material>
+    </visual>
+  </gazebo>
 </robot>

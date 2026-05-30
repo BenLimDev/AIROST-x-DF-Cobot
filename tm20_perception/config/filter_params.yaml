@@ -1,0 +1,15 @@
+pcl_filter_node:
+  ros__parameters:
+    # Voxel grid - leaf size in meters (1cm cubes)
+    # voxel_leaf_size: 0.5
+
+    pass_z_min: -10.0
+    pass_z_max: 10.0
+    pass_x_min: -10.0
+    pass_x_max: 10.0
+    pass_y_min: -10.0
+    pass_y_max: 10.0
+
+    # Topic names
+    input_topic: "/camera/depth_image/points"
+    output_topic: "/filtered_points"
