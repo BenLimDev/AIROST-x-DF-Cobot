@@ -88,7 +88,7 @@
   </link>
 
   <joint name="joint_1" type="revolute">
-    <origin xyz="-0.04007 -0.00037 0.01545" rpy="1.5708 0 0.39147" />
+    <origin xyz="-0.04007 -0.00037 0.01545" rpy="1.5708 0 -2.2375" />
     <parent link="base_link" />
     <child link="link_1" />
     <axis xyz="0 1 0" />
@@ -115,18 +115,18 @@
   </link>
 
   <joint name="joint_2" type="revolute">
-    <origin xyz="0.14186 0.085 0" rpy="1.5708 -1.4804 -1.5708" />
+    <origin xyz="0.18555 0.085 0" rpy="1.5708 -1.5658 -1.5708" />
     <parent link="link_1" />
     <child link="link_2" />
     <axis xyz="0 0 1" />
-    <limit lower="-3.14" upper="3.14" effort="100" velocity="10" />
+    <limit lower="-3.14" upper="3.14" effort="100" velocity="0.1" />
   </joint>
 
   <link name="link_3">
     <inertial>
-      <origin xyz="-0.06778 0.26348 0" rpy="0 0 0" />
-      <mass value="4.043" />
-      <inertia ixx="0.149" ixy="0.0029" ixz="0" iyy="0.0048" iyz="0" izz="0.150" />
+      <origin xyz="-0.17349 0.238 0" rpy="0 0 0" />
+      <mass value="6.177" />
+      <inertia ixx="0.221" ixy="0.02" ixz="0" iyy="0.014" iyz="0" izz="0.227" />
     </inertial>
     <visual>
       <geometry>
@@ -142,7 +142,7 @@
   </link>
 
   <joint name="joint_3" type="revolute">
-    <origin xyz="0 0.6361 0" rpy="0.079313 1.5708 0" />
+    <origin xyz="0 0.6361 0" rpy="-1.5708 1.5312 -1.5797" />
     <parent link="link_2" />
     <child link="link_3" />
     <axis xyz="1 0 0" />
@@ -151,7 +151,7 @@
 
   <link name="link_4">
     <inertial>
-      <origin xyz="-0.04898 -0.00371 0" rpy="0 0 0" />
+      <origin xyz="0.066 -0.0037 0" rpy="0 0 0" />
       <mass value="0.84" />
       <inertia ixx="0.0014" ixy="0" ixz="0" iyy="0.0009" iyz="0" izz="0.0016" />
     </inertial>
@@ -169,7 +169,7 @@
   </link>
 
   <joint name="joint_4" type="revolute">
-    <origin xyz="0 0.5271 0" rpy="3.1396 0 -3.1416" />
+    <origin xyz="0 0.55558 0" rpy="3.1399 0 3.1416" />
     <parent link="link_3" />
     <child link="link_4" />
     <axis xyz="1 0 0" />
@@ -178,8 +178,8 @@
 
   <link name="link_5">
     <inertial>
-      <origin xyz="-0.07928 0 0.05484" rpy="0 0 0" />
-      <mass value="1.582" />
+      <origin xyz="-0.08 0 0.055" rpy="0 0 0" />
+      <mass value="1.58" />
       <inertia ixx="0.0048" ixy="0" ixz="0.0003" iyy="0.0051" iyz="0" izz="0.0016" />
     </inertial>
     <visual>
@@ -196,7 +196,7 @@
   </link>
 
   <joint name="joint_5" type="revolute">
-    <origin xyz="-0.055141 0.060015 0" rpy="1.4876 0 -1.5708" />
+    <origin xyz="0.060207 0.058537 0" rpy="1.5672 0 -1.5708" />
     <parent link="link_4" />
     <child link="link_5" />
     <axis xyz="1 0 0" />
@@ -205,8 +205,8 @@
 
   <link name="link_6">
     <inertial>
-      <origin xyz="0 0 0.02" rpy="0 0 0" />
-      <mass value="0.2" />
+      <origin xyz="0 0 -0.013" rpy="0 0 0" />
+      <mass value="0.044" />
       <inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.0001" iyz="0" izz="0.0001" />
     </inertial>
     <visual>
@@ -238,14 +238,8 @@
       <topic>camera/depth_image</topic>
       <camera>
         <horizontal_fov>1.50098</horizontal_fov>
-        <image>
-          <width>640</width>
-          <height>480</height>
-        </image>
-        <clip>
-          <near>0.1</near>
-          <far>10.0</far>
-        </clip>
+        <image><width>640</width><height>480</height></image>
+        <clip><near>0.1</near><far>10.0</far></clip>
       </camera>
     </sensor>
   </gazebo>
@@ -254,7 +248,6 @@
     <plugin filename="libgz_ros2_control-system.so" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
       <parameters>CONTROLLER_PARAMS_FILE</parameters>
     </plugin>
-
     <plugin filename="gz-sim-sensors-system" name="gz::sim::systems::Sensors">
       <render_engine>ogre2</render_engine>
     </plugin>
